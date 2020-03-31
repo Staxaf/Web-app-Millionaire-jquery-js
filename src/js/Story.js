@@ -34,13 +34,14 @@ export class Story {
     static renderStory(story, token, allQuests){// метод формирует разметку для списка истории игр
         let displayStory = ''
         story.forEach((item, i) => {
+            let index = Number(item.failQuestion) - 1
             displayStory += `
             <li>
                 ${token == 'Антон' ? `<p>${item.userName}</p>` : ''}
                 <p>${++i + ') ' + item.date}</p>
                 <p class="${item.isWin ? 'text-green' : 'text-red'}">${Story.winOrLose(item)}</p>
                 <p class="text-red">${item.isWin ? '' : `Ошибка в ${item.failQuestion} вопросе: `}</p>
-                <p>${item.isWin ? '' : `${allQuests[item.failQuestion].name}`}</p>
+                <p>${item.isWin ? '' : `${allQuests[index].name}`}</p>
                 <li>
             `
         }); //<p>${item.winOrLose()}</p>

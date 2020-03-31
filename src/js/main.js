@@ -9,7 +9,7 @@ let currentQuest = 0 // текущий вопрос
 let userName = null // имя пользователя для статистики
 let userStory = []// история побед и поражений пользователя
 
-
+$(document).ready(() => {
     userName = localStorage.getItem('userName')// получение имени юзера с локального хранителя
     userStory = JSON.parse(localStorage.getItem('userStory'))// получение истории с локального хранилища
     startQuest(currentQuest)
@@ -68,7 +68,9 @@ let userStory = []// история побед и поражений польз�
                 .css('visibility', 'visible')
             $('question__title').removeClass('font-red')
             $('.question__text').show()
-            refreshStory(userStory)
+            if(!isNull(userName)){
+                refreshStory(userStory)
+            }
             currentQuest = 0
             startQuest(0)
         }, 1000)
@@ -116,16 +118,17 @@ let userStory = []// история побед и поражений польз�
         localStorage.setItem('userName', userName)
         $('.popup__text h2').text(`Добро пожаловать, ${userName}!`)
         refreshStory(userStory)
-        //console.log(userName)
     });
+})
+    
 
 function startQuest(index){// функция старта игры
+    $('#popup, #stats').hide();
     if(!isNull(userName)){
         $('.popup__text h2').text(`Добро пожаловать, ${userName}!`)
         refreshStory(userStory)
     }
     $('.dashboard').css('opacity', '0');    
-    $('#popup, #stats').hide();
     $('.question__title').css('color', 'white')
     $('.answer').css('visibility', 'visible');
     $('.answer').removeClass('bg-red bg-green');
